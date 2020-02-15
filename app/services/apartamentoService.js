@@ -2,10 +2,11 @@ const Apartamento = require("../models/apartamento");
 const Unidad = require("../models/Unidad");
 const Propietario = require("../models/Propietario");
 
-exports.obtenerApartamento = async req => {
+exports.obtenerApartamento = async numero => {
   let apartamento;
-  if (req.query.numero) {
-    apartamento = await Apartamento.findOne({ numero: req.query.numero });
+
+  if (numero) {
+    apartamento = await Apartamento.findOne({ numero: numero });
   } else {
     //apartamento = await Apartamento.find().populate('unidad','nombre pisos constructora');
 
@@ -16,8 +17,9 @@ exports.obtenerApartamento = async req => {
   return apartamento;
 };
 
-exports.crearApartamento = async req => {
-  let apartamento = req.body;
+exports.crearApartamento = async apartamento => {
+  
+  
   let addResult = await Apartamento.create(apartamento);
 
   let unidad = await Unidad.findById(req.body.unidad);

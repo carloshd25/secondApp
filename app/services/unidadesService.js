@@ -2,7 +2,7 @@ const Unidad = require("../models/Unidad");
 const Apartamento = require("../models/apartamento");
 const Propietario = require("../models/Propietario");
 
-exports.obtenerUnidad = async (req, res) => {
+exports.obtenerUnidad = async () => {
   let Unidades = await Unidad.find().populate({
     path: "apartamentos",
     model: Apartamento,
@@ -13,20 +13,20 @@ exports.obtenerUnidad = async (req, res) => {
   return Unidades;
 };
 
-exports.crearUnidad = async req => {
-  let unidad = req.body;
+exports.crearUnidad = async unidad => {
+  
   let addResult = await Unidad.create(unidad);
   return addResult;
 };
 
-exports.eliminarUnidad = async req => {
-  let idUnidad=req.params.id;
+exports.eliminarUnidad = async idUnidad => {
+  
   let deleteResult = await Unidad.findByIdAndDelete(idUnidad);
 
   return deleteResult;
 };
-exports.findUnidad = async (req, res) => {
-  let idUnidad = req.params.id;
+exports.findUnidad = async (idUnidad) => {
+  
   let UnidadResult = await Unidad.findById(idUnidad).populate({
     path: "apartamentos",
     model: Apartamento,
@@ -36,10 +36,9 @@ exports.findUnidad = async (req, res) => {
   return UnidadResult;
 };
 
-exports.putUnidad = async (req, res) => {
-  let idUnidad = req.params.id;
-  let data = req.body;
-  let result = await Unidad.findByIdAndUpdate(idUnidad, data);
+exports.putUnidad = async (idUnidad, data) => {
+  
+  let result = await Unidad.findByIdAndUpdate(idUnidad, data, {new: true});
 
   return result;
 };

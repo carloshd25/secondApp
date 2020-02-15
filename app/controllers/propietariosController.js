@@ -2,7 +2,8 @@ const PropietarioService = require("../services/propietarioService");
 
 exports.obtenerPropietarios = async (req, res) => {
   try {
-    let propietarios = await PropietarioService.obtenerPropietarios(req);
+    let documento=req.query.documento;
+    let propietarios = await PropietarioService.obtenerPropietarios(documento);
 
     res.status(200).send(propietarios);
   } catch (err) {
@@ -12,7 +13,8 @@ exports.obtenerPropietarios = async (req, res) => {
 
 exports.crearPropietario = async (req, res) => {
   try {
-    let addResult = await PropietarioService.crearPropietario(req);
+    let propietario = req.body;
+    let addResult = await PropietarioService.crearPropietario(propietario);
     res.status(200).send(addResult);
   } catch (err) {
     res.status(500).send(err);
@@ -21,7 +23,8 @@ exports.crearPropietario = async (req, res) => {
 
 exports.eliminarPropietario = async (req, res) => {
   try {
-    let deleteResult = await PropietarioService.eliminarPropietario(req);
+    let idPropietario = req.params.id;
+    let deleteResult = await PropietarioService.eliminarPropietario(idPropietario);
     if (!deleteResult) {
       res.status(404).send({ error: "propietario no encontrado" });
     } else {
@@ -33,7 +36,8 @@ exports.eliminarPropietario = async (req, res) => {
 };
 exports.findPropietario = async (req, res) => {
   try {
-    let propietarioResult = await PropietarioService.findPropietario(req);
+    let idPropietario = req.params.id;
+    let propietarioResult = await PropietarioService.findPropietario(idPropietario);
 
     if (!propietarioResult) {
       res.status(404).send({ error: "propietario no encontrado" });
@@ -47,7 +51,9 @@ exports.findPropietario = async (req, res) => {
 
 exports.putPropietario = async (req, res) => {
   try {
-    let result = await PropietarioService.putPropietario(req);
+    let idPropietario = req.params.id;
+    let propietario = req.body;
+    let result = await PropietarioService.putPropietario(idPropietario,propietario);
     if (!result) {
       res.status(404).send({ error: "propietario no encontrado" });
     } else {
@@ -60,7 +66,8 @@ exports.putPropietario = async (req, res) => {
 
 exports.findPropietarioDoc = async (req, res) => {
   try {
-    let propietarioResult = await PropietarioService.findPropietarioDoc;
+    let documento = req.params.id;
+    let propietarioResult = await PropietarioService.findPropietarioDoc(documento);
     if (!propietarioResult) {
       res.status(404).send({ error: "propietario no encontrado" });
     } else {

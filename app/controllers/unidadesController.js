@@ -2,7 +2,7 @@ const UnidadService = require("../services/unidadesService");
 
 exports.obtenerUnidad = async (req, res) => {
   try {
-    let Unidades = await UnidadService.obtenerUnidad(req);
+    let Unidades = await UnidadService.obtenerUnidad();
 
     res.status(200).send(Unidades);
   } catch (err) {
@@ -12,7 +12,8 @@ exports.obtenerUnidad = async (req, res) => {
 
 exports.crearUnidad = async (req, res) => {
   try {
-    let addResult = await UnidadService.crearUnidad(req);
+    let unidad = req.body;
+    let addResult = await UnidadService.crearUnidad(unidad);
     res.status(200).send(addResult);
   } catch (err) {
     res.status(500).send(err);
@@ -21,7 +22,8 @@ exports.crearUnidad = async (req, res) => {
 
 exports.eliminarUnidad = async (req, res) => {
   try {
-    let deleteResult = await UnidadService.eliminarUnidad(req);
+    let idUnidad=req.params.id;
+    let deleteResult = await UnidadService.eliminarUnidad(idUnidad);
     if (!deleteResult) {
       res.status(404).send({ error: "Unidad no encontrado" });
     } else {
@@ -33,7 +35,8 @@ exports.eliminarUnidad = async (req, res) => {
 };
 exports.findUnidad = async (req, res) => {
   try {
-    let UnidadResult = await UnidadService.findUnidad(req);
+    let idUnidad = req.params.id;
+    let UnidadResult = await UnidadService.findUnidad(idUnidad);
 
     if (!UnidadResult) {
       res.status(404).send({ error: "Unidad no encontrado" });
@@ -47,7 +50,9 @@ exports.findUnidad = async (req, res) => {
 
 exports.putUnidad = async (req, res) => {
   try {
-    let result = await UnidadService.putUnidad(req);
+    let idUnidad = req.params.id;
+    let data = req.body;
+    let result = await UnidadService.putUnidad(idUnidad,data);
     if (!result) {
       res.status(404).send({ error: "Unidad no encontrado" });
     } else {

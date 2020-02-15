@@ -2,7 +2,10 @@ const ApartamentoService = require("../services/apartamentoService");
 
 exports.obtenerApartamento = async (req, res) => {
   try {
-    let apartamento = await ApartamentoService.obtenerApartamento(req);
+
+    let numero =req.query.numero;
+
+    let apartamento = await ApartamentoService.obtenerApartamento(numero);
 
     res.status(200).send(apartamento);
   } catch (err) {
@@ -12,7 +15,9 @@ exports.obtenerApartamento = async (req, res) => {
 
 exports.crearApartamento = async (req, res) => {
   try {
-    let addResult = await ApartamentoService.crearApartamento(req);
+    let apartamento = req.body;
+
+    let addResult = await ApartamentoService.crearApartamento(apartamento);
 
     res.status(200).send(addResult);
   } catch (err) {
