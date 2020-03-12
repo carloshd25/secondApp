@@ -11,6 +11,22 @@ exports.login = async (req, res) => {
   res.send(response);
 };
 
+exports.singUp=async(req,res)=>{
+  try{
+    const user=await authService.SignUp(req.body);
+    if(!user){
+      return res.status(500).send({error:'El usuario no ha podido ser creado'});
+    }
+    return res.status(201).send(user);
+
+  }
+  catch(err){
+    console.log(  err  );
+    return res.status(500).send(err);
+    
+  }
+}
+
 exports.autenticar=async(req,res)=>{
   const token=req.body.token;
 

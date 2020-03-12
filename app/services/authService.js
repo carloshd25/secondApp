@@ -1,5 +1,6 @@
 const jwt =require('jsonwebtoken');
-const config =require('../configs/configs')
+const config =require('../configs/configs');
+const userService=require('./userService');
 
 exports.autenticar=(user,pass)=>{
     if(user==pass){
@@ -12,6 +13,16 @@ exports.autenticar=(user,pass)=>{
     else{
         return "no se pudo autenticar";
     }
+}
+
+exports.SignUp= async(user)=>{
+    const userName=user.userName;
+    const userExit =await userService.getUserByUsername(userName);
+    if(userExit){
+        throw new Error('El usuario ya existe');
+    }
+
+    return await userService.createUser(user);
 }
 
 exports.validarToken=(token)=>{
